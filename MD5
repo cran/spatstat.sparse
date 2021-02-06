@@ -1,13 +1,13 @@
-e684b4dee3db864a40989cd75392e2ba *DESCRIPTION
+1bd61a2f54f3092b4dcadf0da18ba7e8 *DESCRIPTION
 8f69573a22652667a76f4ee4bcaf0e53 *NAMESPACE
 576c36b08a1e793ee239e4b26144b216 *NEWS
 97592487ade0cb299b8c7be79393956c *R/indices.R
 243d3bcff7b08ecf7ab19f446c56c716 *R/linalg.R
 4fb41311aebaa063c752221b28d7ab02 *R/matrixpower.R
 d1e16445595ee664a9e992fe1cd07733 *R/sparse3Darray.R
-7d5ce08c4930b85d3613512945cd4275 *R/sparsecommon.R
+cb4594cad1498af35944def65efc095f *R/sparsecommon.R
 064ac2c2d4dd36443ed6f9bc8f2dd99d *R/sparselinalg.R
-1ab1b4e26f4a51a9c5a318d15a53b245 *inst/doc/packagesizes.txt
+a6a2d7bb00b87f281f0b0149f72a9050 *inst/doc/packagesizes.txt
 49be0b578554c65b0d922741c5afb49f *man/Extract.sparse3Darray.Rd
 b96f1f5454a0bb4d61f07dd72b2567ba *man/Math.sparse3Darray.Rd
 c55fd3e281ae5d16297cf1b36ad060b6 *man/aperm.sparse3Darray.Rd
