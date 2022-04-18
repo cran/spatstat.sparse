@@ -1,13 +1,13 @@
-b7188e8d3680d8243e5a4b5676a9bfed *DESCRIPTION
+eaf6fc1c13db6b0a55e3bd9609ec01ad *DESCRIPTION
 ac50c0b7f8040a9d371b2a853b680174 *NAMESPACE
-e5fb576aa3fd5b2514ad33627cd971d4 *NEWS
+68e98f67d04b7a9a10ab1c788dc43849 *NEWS
 90de543d11bf2ba4a505743ff184f06c *R/gridadjacency.R
 20f2e0c815e9c807931ebb4bd9d94bcb *R/linalg.R
-4fb41311aebaa063c752221b28d7ab02 *R/matrixpower.R
+fb2f7523782507956014ad11e9e99390 *R/matrixpower.R
 abf3f3d6e4fa2cddaf895e4cc7ffb323 *R/sparse3Darray.R
 cb4594cad1498af35944def65efc095f *R/sparsecommon.R
 064ac2c2d4dd36443ed6f9bc8f2dd99d *R/sparselinalg.R
-8fededea421bc542b623faae42f9aefe *inst/doc/packagesizes.txt
+c4e4ae05475b2e022265dbf1869a4a4c *inst/doc/packagesizes.txt
 49be0b578554c65b0d922741c5afb49f *man/Extract.sparse3Darray.Rd
 b96f1f5454a0bb4d61f07dd72b2567ba *man/Math.sparse3Darray.Rd
 c55fd3e281ae5d16297cf1b36ad060b6 *man/aperm.sparse3Darray.Rd
@@ -15,7 +15,7 @@ c643296491b7a26b5b4759977f6dfc67 *man/as.array.sparse3Darray.Rd
 3370fbfd635292c0b73aabf265b03570 *man/as.sparse3Darray.Rd
 b42678efa696258b5471e304d3467736 *man/bind.sparse3Darray.Rd
 b004d081c72b7bbfa7f4d0e8452b9f85 *man/gridadjacencymatrix.Rd
-390c43841b92ba3277f25852a55d2cc9 *man/macros/defns.Rd
+21caadee258303e12f57caf0905988a9 *man/macros/defns.Rd
 e8388843f360eb8ed9b59105a51f974f *man/marginSumsSparse.Rd
 2bbafee72c33faca8f1edf1c0a747419 *man/matrixpower.Rd
 f728169b92089befc36b92cd14b22a3e *man/methods.sparse3Darray.Rd
@@ -31,5 +31,5 @@ cef9a229c5a1ee4513e85754c5d2d152 *src/linalg.c
 6c8b4069a7310085ce7bb7c7cab8d821 *src/sparselinalg.c
 ceb300f3f81d94e6a735a2fbd2d0a7b1 *src/spasumsymout.h
 d4aaa68f9d5c8dbb6f76f5f52feca432 *src/sumsymouter.h
-7d0115000fc56562f752207648e13db8 *tests/linalgeb.R
+6d5d2d3d8b400439f435b8812cde3e3a *tests/linalgeb.R
 538446024b2591753676f76e4cb317d1 *tests/sparse3Darrays.R
