@@ -6,7 +6,7 @@
 #'  Copyright (c) Adrian Baddeley, Ege Rubak and Rolf Turner 2016-2020
 #'  GNU Public Licence >= 2.0
 #'
-#' $Revision: 1.37 $ $Date: 2021/12/17 01:17:06 $
+#' $Revision: 1.38 $ $Date: 2022/05/23 02:33:06 $
 #'
 
 sumouter <- function(x, w=NULL, y=x) {
@@ -25,7 +25,7 @@ sumouter <- function(x, w=NULL, y=x) {
       stopifnot(length(w) == nrow(x))
     } else {
       w <- as.numeric(w)
-      check.nvector(w, nrow(x), things="rows of x", naok=TRUE)
+      check.nvector(w, nrow(x), things="rows of x", naok=TRUE, vname="w")
     }
   }
     
