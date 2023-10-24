@@ -1,6 +1,6 @@
 Package: spatstat.sparse
-Version: 3.0-2
-Date: 2023-06-25
+Version: 3.0-3
+Date: 2023-10-24
 Title: Sparse Three-Dimensional Arrays and Linear Algebra Utilities
 Authors@R: c(person("Adrian", "Baddeley", 
                     role = c("aut", "cre", "cph"),
@@ -8,7 +8,7 @@ Authors@R: c(person("Adrian", "Baddeley",
 		    comment = c(ORCID="0000-0001-9499-8382")),
 	     person("Rolf", "Turner", 
                     role = c("aut", "cph"),
- 	            email="r.turner@auckland.ac.nz",
+ 	            email="rolfturner@posteo.net",
 		    comment=c(ORCID="0000-0001-5521-5218")),
 	    person("Ege",   "Rubak", 
                     role = c("aut", "cph"),
@@ -27,10 +27,10 @@ URL: http://spatstat.org/
 NeedsCompilation: yes
 ByteCompile: true
 BugReports: https://github.com/spatstat/spatstat.sparse/issues
-Packaged: 2023-06-25 03:04:36 UTC; adrian
+Packaged: 2023-10-24 04:58:31 UTC; adrian
 Author: Adrian Baddeley [aut, cre, cph]
     (<https://orcid.org/0000-0001-9499-8382>),
   Rolf Turner [aut, cph] (<https://orcid.org/0000-0001-5521-5218>),
   Ege Rubak [aut, cph] (<https://orcid.org/0000-0002-6675-533X>)
 Repository: CRAN
-Date/Publication: 2023-06-25 04:30:02 UTC
+Date/Publication: 2023-10-24 05:40:02 UTC
