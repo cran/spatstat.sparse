@@ -6,7 +6,7 @@
 #'  Copyright (c) Adrian Baddeley, Ege Rubak and Rolf Turner 2016-2020
 #'  GNU Public Licence >= 2.0
 #'
-#' $Revision: 1.38 $ $Date: 2022/05/23 02:33:06 $
+#' $Revision: 1.40 $ $Date: 2026/04/27 07:36:07 $
 #'
 
 sumouter <- function(x, w=NULL, y=x) {
@@ -239,37 +239,42 @@ bilinearform <- function(x, v, y) {
 }
 
 sumsymouter <- function(x, w=NULL, distinct=TRUE) {
-  ## x is a 3D array
-  ## w is a matrix
+  ## x is a 3D array or sparse 3D array
+  ## w is a matrix or sparse matrix
   ## Computes the sum of outer(x[,i,j], x[,j,i]) * w[i,j] over all pairs i != j
   ## handle complex values
-  if(is.complex(w)) {
+  if(isComplex(w)) {
     a <- sumsymouter(x, Re(w), distinct=distinct)
     b <- sumsymouter(x, Im(w), distinct=distinct)
     result <- a + b * 1i
     return(result)
   }
-  if(is.complex(x)) {
+  if(isComplex(x)) {
     a <- sumsymouter(Re(x), w=w, distinct=distinct)
     b <- sumsymouter(Im(x), w=w, distinct=distinct)
     d <- sumsymouter(Re(x)+Im(x), w=w, distinct=distinct)
     result <- a - b + (d - a - b) * 1i
     return(result)
   }
-  ## handle sparse arrays
-  if(inherits(x, c("sparseSlab", "sparse3Darray")) &&
-     (is.null(w) || inherits(w, "sparseMatrix")))
-    return(sumsymouterSparse(x, w, distinct=distinct))
   ## arguments are numeric
-  x <- as.array(x)
+  ## validate dimensions
   stopifnot(length(dim(x)) == 3)
   if(dim(x)[2L] != dim(x)[3L])
     stop("The second and third dimensions of x should be equal")
   if(!is.null(w)) {
-    w <- as.matrix(w)
+    stopifnot(length(dim(w)) == 2)
     if(!all(dim(w) == dim(x)[-1L]))
       stop("Dimensions of w should match the second and third dimensions of x")
   }
+  ## handle sparse arrays
+  if(inherits(x, c("sparseSlab", "sparse3Darray"))) {
+    if(!is.null(w))
+      w <- as(w, "sparseMatrix")
+    return(sumsymouterSparse(x, w, distinct=distinct))
+  }
+  x <- as.array(x)
+  if(!is.null(w)) 
+    w <- as.matrix(w)
   p <- dim(x)[1L]
   n <- dim(x)[2L]
   if(!distinct) {

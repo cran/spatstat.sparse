@@ -6,7 +6,7 @@
 #'   Copyright (c) Adrian Baddeley, Ege Rubak and Rolf Turner 2016-2020
 #'   GNU Public Licence >= 2.0
 #' 
-#'   $Revision: 1.19 $  $Date: 2021/01/08 01:16:41 $
+#'   $Revision: 1.23 $  $Date: 2026/04/27 04:11:56 $
 
 marginSumsSparse <- function(X, MARGIN) {
   #' equivalent to apply(X, MARGIN, sum)
@@ -202,7 +202,7 @@ sumsymouterSparse <- function(x, w=NULL, distinct=TRUE, dbg=FALSE) {
   ##  result <- a + b * 1i
   ##  return(result)
   ## }
-  if(is.complex(x)) {
+  if(isComplex(x)) {
     a <- sumsymouter(Re(x), w=w, distinct=distinct)
     b <- sumsymouter(Im(x), w=w, distinct=distinct)
     d <- sumsymouter(Re(x)+Im(x), w=w, distinct=distinct)
@@ -221,17 +221,17 @@ sumsymouterSparse <- function(x, w=NULL, distinct=TRUE, dbg=FALSE) {
   if(distinct) {
     #' remove entries with j = k
     ok <- with(df, j != k)
-    df <- df[ok, , drop=TRUE]
+    df <- df[ok, , drop=FALSE]
   }
   ## trivial?
-  if(nrow(df) < 2) {
+  if(nrow(df) == 0) {
     y <- matrix(0, m, m)
     dimnames(y) <- rep(dimnames(x)[1], 2)
     return(y)
   }
   ## order by increasing j, then k
   oo <- with(df, order(j, k, i))
-  df <- df[oo, ]
+  df <- df[oo, , drop=FALSE]
   ## now provide ordering by increasing k then j
   ff <- with(df, order(k,j,i))
   ##
@@ -257,8 +257,8 @@ sumsymouterSparse <- function(x, w=NULL, distinct=TRUE, dbg=FALSE) {
               PACKAGE = "spatstat.sparse")
     } else {
       ## extract triplet representation of w
-      w <- as(w, Class="TsparseMatrix")
-      dfw <- data.frame(j=w@i, k=w@j, w=w@x)
+      wdata <- SparseMatrixEntries(w, base=0)
+      dfw <- with(wdata, data.frame(j=i, k=j, w=x))
       woo <- with(dfw, order(j, k))
       dfw <- dfw[woo, , drop=FALSE]
       z <- .C(SP_CspaWtSumSymOut,
@@ -292,8 +292,8 @@ sumsymouterSparse <- function(x, w=NULL, distinct=TRUE, dbg=FALSE) {
               PACKAGE = "spatstat.sparse")
     } else {
       ## extract triplet representation of w
-      w <- as(w, Class="TsparseMatrix")
-      dfw <- data.frame(j=w@i, k=w@j, w=w@x)
+      wdata <- SparseMatrixEntries(w, base=0)
+      dfw <- with(wdata, data.frame(j=i, k=j, w=x))
       woo <- with(dfw, order(j, k))
       dfw <- dfw[woo, , drop=FALSE]
       z <- .C(SP_CDspaWtSumSymOut,

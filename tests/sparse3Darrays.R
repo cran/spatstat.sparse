@@ -5,12 +5,12 @@ require(spatstat.sparse)
 ALWAYS <- FULLTEST <- TRUE
 #'    tests/sparse3Darrays.R
 #'  Basic tests of code in sparse3Darray.R and sparsecommon.R
-#'  $Revision: 1.32 $ $Date: 2023/06/23 02:34:57 $
+#'  $Revision: 1.34 $ $Date: 2026/05/06 03:38:51 $
 
 if(!exists("ALWAYS")) ALWAYS <- TRUE
 if(!exists("FULLTEST")) FULLTEST <- ALWAYS
 
-if(ALWAYS) { # fundamental, C code
+if(ALWAYS) { # fundamental R and/or C code
 local({
   #' forming arrays
 
@@ -106,7 +106,18 @@ local({
       stop("Incorrect answer from marginSumsSparse")
     }
 
-  }
+    #' check strategy for avoiding compressed representation of symmetric matrix
+    A <- matrix(c(10,  0,  0, 1,
+                   0, 20,  2, 7,
+                   0,  2, 30, 0,
+                   1,  7,  0, 40),
+                4,4)
+    As <- as(A, "sparseMatrix")
+    dfA <- SparseEntries(As)
+    if(nrow(dfA) != sum(A != 0))
+      stop(paste("SparseEntries() does not correctly handle",
+                 "the compressed representation of a symmetric matrix"))
+  } 
 })
 
     
@@ -325,19 +336,35 @@ local({
     Mmap3 <- mapSparseEntries(Mempty, 1, matrix(1:10, 5, 2), across=3)
 
     #'  -------------- sparselinalg.R -------------------------
-    U <- aperm(M,c(3,1,2))  # 2 x 5 x 5
-    UU <- sumsymouterSparse(U, dbg=TRUE)
-    w <- matrix(0, 5, 5)
-    w[cbind(1:3,2:4)] <- 0.5
-    w <- as(w, "sparseMatrix")
-    UU <- sumsymouterSparse(U, w, dbg=TRUE)
-    Uempty <- sparse3Darray(dims=c(2,5,5))
-    UU <- sumsymouterSparse(Uempty, w, dbg=TRUE)
+    Us <- aperm(M,c(3,1,2))  # 2 x 5 x 5, sparse3Darray
+    Um <- as.array(Us)
+    wm <- matrix(0, 5, 5)
+    wm[cbind(1:3,2:4)] <- 0.5
+    ws <- as(wm, "sparseMatrix")
+    bm <- wm + t(wm)
+    bs <- as(as(bm, "symmetricMatrix"), "sparseMatrix")
+    ## run different cases
+    UUm <- sumsymouter(Um)
+    UUs <- sumsymouterSparse(Us, dbg=TRUE)
+    UUwm <- sumsymouter(Um, wm)
+    UUws <- sumsymouterSparse(Us, ws, dbg=TRUE)
+    UUbm <- sumsymouter(Um, bm)
+    UUbs <- sumsymouterSparse(Us, bs)
+    Vempty <- sparse3Darray(dims=c(2,5,5))
+    VVws <- sumsymouterSparse(Vempty, ws)
+    VVwm <- sumsymouter(as.array(Vempty), wm)
     #' complex
-    Ucom <- U + U * 1i
-    UU <- sumsymouterSparse(Ucom)
-    UU <- sumsymouterSparse(Ucom, w)
-    #' 
+    Ucom <- Us + Us * 1i
+    UUc <- sumsymouter(Ucom)
+    UUcw <- sumsymouter(Ucom, wm)
+    ## check validity
+    if(!all(UUs == UUm))
+      stop("sumsymouter(x): sparse and non-sparse algorithms disagree")
+    if(!all(UUws == UUwm))
+      stop("sumsymouter(x, w): sparse and non-sparse algorithms disagree")
+    if(!all(UUbs == UUbm))
+      stop(paste("sumsymouter(x, w): sparse and non-sparse algorithms disagree",
+                 "when w is symmetric"))
   }
 
   ## 1 x 1 x 1 arrays
@@ -349,6 +376,18 @@ local({
   A <- array(runif(75) * (runif(75) < 0.7), dim=c(3,5,5))
   M <- as.sparse3Darray(A)
   M[rep(1,3), c(1,1,2), rep(2, 3)]
+
+  ## and again using a fixed mwe
+  Afull <- array(1:50, dim=c(2,5,5))
+  Asparse <- as.sparse3Darray(Afull)
+  Mfull <- abs(.col(c(5,5)) - .row(c(5,5)))
+  Msparse  <- as(as(Mfull, "symmetricMatrix"), "sparseMatrix")
+  Rfull <- sumsymouter(Afull, Mfull)
+  Rsparse <- sumsymouterSparse(Asparse, Msparse)
+  if(!all(Rsparse==Rfull))
+    stop(paste("sumsymouter(x, w): sparse and non-sparse algorithms disagree",
+               "when w is symmetric"))
+
 })
 
 }

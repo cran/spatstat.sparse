@@ -6,12 +6,14 @@
 %%%%  undocumented linear algebra
 \alias{checksolve}
 \alias{check.mat.mul}
-\alias{sumsymouter}
 %% sparse 3D arrays
 \alias{unionOfSparseIndices}
 \alias{inside3Darray}
+\alias{isComplex}
 \alias{SparseEntries}
 \alias{SparseIndices}
+\alias{SparseMatrixEntries}
+\alias{SparseMatrixIndices}
 \alias{EntriesToSparse}
 \alias{mapSparseEntries}
 \alias{applySparseEntries}
@@ -31,12 +33,14 @@ representativeRows(x)
 %%% undocumented linear algebra
 checksolve(M, action, descrip, target)
 check.mat.mul(A, B, Acols, Brows, fatal)
-sumsymouter(x, w, distinct)
 %% sparse 3D arrays
 unionOfSparseIndices(A,B)
 inside3Darray(d, i, j, k)
+isComplex(x)
 SparseEntries(x)
 SparseIndices(x)
+SparseMatrixEntries(x, base)
+SparseMatrixIndices(x, base)
 EntriesToSparse(df, dims)
 mapSparseEntries(x, margin, values, conform, across)
 applySparseEntries(x, f, \dots)

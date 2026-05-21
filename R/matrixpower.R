@@ -4,7 +4,7 @@
 #'   Copyright (c) Adrian Baddeley, Ege Rubak and Rolf Turner 2016-2022
 #'   GNU Public Licence >= 2.0
 #'
-#'   $Revision: 1.9 $  $Date: 2024/06/09 00:01:09 $
+#'   $Revision: 1.10 $  $Date: 2026/04/27 03:56:40 $
 #' 
 
 matrixsqrt <- function(x, complexOK=TRUE) {
@@ -112,3 +112,4 @@ matrixpower <- function(x, power, complexOK=TRUE) {
     dimnames(y) <- rev(dn)
   return(y)
 }
+
